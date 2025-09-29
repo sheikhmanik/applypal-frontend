@@ -136,6 +136,7 @@ export default function SignUp() {
             <Image
               src="/images/logo.png"
               alt="ApplyPal Logo"
+              width={300} height={300}
               className="w-28 sm:w-32 object-contain"
             />
           </a>
@@ -154,7 +155,7 @@ export default function SignUp() {
           <div className="w-full flex flex-col gap-2">
             {/* LinkedIn Signup */}
             <div className="flex items-center justify-center w-full gap-3 bg-[#1569BF] px-5 py-3 rounded-lg cursor-pointer transition hover:bg-[#135a9f]">
-              <Image src="/images/linkedin.png" alt="LinkedIn" className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Image src="/images/linkedin.png" width={300} height={300} alt="LinkedIn" className="w-5 h-5 sm:w-6 sm:h-6" />
               <p className="font-medium sm:font-semibold text-white text-sm sm:text-base">
                 Sign up with LinkedIn
               </p>
@@ -162,7 +163,7 @@ export default function SignUp() {
 
             {/* Google Signup */}
             <div className="flex items-center justify-center w-full gap-3 bg-white border border-gray-300 px-5 py-3 rounded-lg cursor-pointer transition hover:bg-gray-50">
-              <Image src="/images/google.png" alt="Google" className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Image src="/images/google.png" width={300} height={300} alt="Google" className="w-5 h-5 sm:w-6 sm:h-6" />
               <p className="font-medium sm:font-semibold text-gray-700 text-sm sm:text-base">
                 Sign up with Google
               </p>
@@ -279,6 +280,7 @@ export default function SignUp() {
         <Image
           src="/images/ambassador-register-hero.png"
           alt="Banner"
+          width={300} height={300}
           className="w-full h-full object-cover"
         />
         <div className="bg-[#D9D9D940] absolute inset-0"></div>

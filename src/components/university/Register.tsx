@@ -148,6 +148,7 @@ export default function SignUp() {
               src="/images/logo.png"
               alt="ApplyPal Logo"
               className="w-28 sm:w-32 object-contain"
+              width={300} height={300}
             />
           </a>
           <p className="text-sm sm:text-base text-gray-700">
@@ -274,6 +275,7 @@ export default function SignUp() {
           src="/images/applypal_banner.png"
           alt="Banner"
           className="w-full h-full object-cover"
+          width={300} height={300}
         />
         <div className="bg-[#D9D9D940] absolute inset-0"></div>
       </div>

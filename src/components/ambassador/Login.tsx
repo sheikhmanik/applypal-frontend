@@ -68,7 +68,7 @@ export default function LoginPage() {
       <div className="flex-1 flex flex-col justify-center px-8 py-10 md:px-16 bg-white shadow-lg">
         <div className="max-w-md w-full mx-auto">
           <a href="/" className="flex justify-center mb-10">
-            <Image src="/images/logo.png" alt="ApplyPal Logo" className="w-40" />
+            <Image src="/images/logo.png" width={300} height={300} alt="ApplyPal Logo" className="w-40" />
           </a>
 
           <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">
@@ -136,6 +136,7 @@ export default function LoginPage() {
         <Image
           src="/images/login-hero.jpg"
           alt="Login Banner"
+          width={300} height={300}
           className="w-full h-full object-cover rounded-l-3xl"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-red-700/70 to-red-900/70 flex items-center justify-center">
