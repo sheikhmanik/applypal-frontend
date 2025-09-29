@@ -109,18 +109,18 @@ export default function SignUp() {
     }
   };
 
-  const passwordRules = [
+  type PasswordRule = {
+    label: string;
+    regex?: RegExp;
+    test?: (pw: string) => boolean;
+  };
+  const passwordRules: PasswordRule[] = [
     { regex: /[A-Z]/, label: "At least one uppercase letter" },
     { regex: /[a-z]/, label: "At least one lowercase letter" },
     { regex: /\d/, label: "At least one number" },
     { regex: /[!@#$%^&*(),.?":{}|<>]/, label: "At least one special character" },
     { test: (pw: string) => pw.length >= 8, label: "At least 8 characters" },
   ];
-  type PasswordRule = {
-    label: string;
-    regex?: RegExp;
-    test?: (pw: string) => boolean;
-  };
   const checkPasswordRule = (pw: string, rule: PasswordRule) => {
     if (rule.regex) return rule.regex.test(pw);
     if (rule.test) return rule.test(pw);
