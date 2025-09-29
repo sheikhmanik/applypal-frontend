@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   
@@ -48,7 +49,7 @@ export default function LoginPage() {
 
       alert("Login successful!");
       window.location.href = "/";
-    } catch (error: any) {
+    } catch (error) {
       if (axios.isAxiosError(error)) {
         const data = error.response?.data;
         alert(data?.message || "Login failed. Please check your credentials.");
@@ -67,9 +68,9 @@ export default function LoginPage() {
       {/* Left side - Form */}
       <div className="flex-1 flex flex-col justify-center px-8 py-10 md:px-16 bg-white shadow-lg">
         <div className="max-w-md w-full mx-auto">
-          <a href="/" className="flex justify-center mb-10">
+          <Link href="/" className="flex justify-center mb-10">
             <Image src="/images/logo.png" width={300} height={300} alt="ApplyPal Logo" className="w-40" />
-          </a>
+          </Link>
 
           <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">
             Welcome Back
@@ -124,9 +125,9 @@ export default function LoginPage() {
 
           <p className="text-gray-600 text-center mt-6">
             Don’t have an account?{" "}
-            <a href="/" className="text-red-600 font-semibold hover:underline">
+            <Link href="/" className="text-red-600 font-semibold hover:underline">
               Register now
-            </a>
+            </Link>
           </p>
         </div>
       </div>

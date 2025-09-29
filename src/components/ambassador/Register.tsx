@@ -3,6 +3,7 @@
 import axios from "axios";
 import { Check } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function SignUp() {
@@ -86,7 +87,7 @@ export default function SignUp() {
       
         alert("Registration successful!");
         window.location.href = "/";
-      } catch (error: any) {
+      } catch (error) {
         if (axios.isAxiosError(error)) {
           const data = error.response?.data;
       
@@ -116,7 +117,7 @@ export default function SignUp() {
     { test: (pw: string) => pw.length >= 8, label: "At least 8 characters" },
   ];
   
-  const checkPasswordRule = (pw: string, rule: any) => {
+  const checkPasswordRule = (pw: string, rule) => {
     if (rule.regex) return rule.regex.test(pw);
     if (rule.test) return rule.test(pw);
     return false;
@@ -132,14 +133,14 @@ export default function SignUp() {
       {/* Register info */}
       <div className="flex-1 w-full md:w-1/2 xl:w-2/5 h-full flex flex-col items-center md:items-end justify-center md:justify-end p-3 sm:p-8">
         <div className="flex flex-row items-start justify-between w-full max-w-md m-3 px-2 gap-5">
-          <a href="/">
+          <Link href="/">
             <Image
               src="/images/logo.png"
               alt="ApplyPal Logo"
               width={300} height={300}
               className="w-28 sm:w-32 object-contain"
             />
-          </a>
+          </Link>
           <p className="text-sm sm:text-base text-gray-700">
             Already an ambassador?{" "}
             <a href="/auth/login/ambassador" className="font-semibold text-[#C80914] hover:underline">
