@@ -124,7 +124,12 @@ export default function SignUp() {
     { test: (pw: string) => pw.length >= 8, label: "At least 8 characters" },
   ];
   
-  const checkPasswordRule = (pw: string, rule) => {
+  type PasswordRule = {
+    label: string;
+    regex?: RegExp;
+    test?: (pw: string) => boolean;
+  };
+  const checkPasswordRule = (pw: string, rule: PasswordRule) => {
     if (rule.regex) return rule.regex.test(pw);
     if (rule.test) return rule.test(pw);
     return false;
