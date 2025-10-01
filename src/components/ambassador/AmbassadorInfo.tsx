@@ -3,7 +3,7 @@
 import { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import { getNames } from "country-list";
-import { Facebook, Info } from "lucide-react";
+import { Info } from "lucide-react";
 
 const countries = getNames();
 
@@ -34,7 +34,6 @@ export default function AmbassadorInfo() {
 
   const [errors, setErrors] = useState<any>({});
   const [currentStep, setCurrentStep] = useState(1);
-  const steps = [1, 2, 3];
 
   // ---------- Handle Input Change ----------
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
