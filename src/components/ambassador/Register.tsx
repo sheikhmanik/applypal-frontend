@@ -19,6 +19,7 @@ export default function SignUp() {
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -69,15 +70,15 @@ export default function SignUp() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true); // mark that user tried submitting
+    setSubmitted(true);
+    setLoading(true);
   
     if (validate()) {
       const payload = { ...formData, role };
-      console.log("Submitting:", payload);
   
       try {
         const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/ambassador/signup`,
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
           payload
         );
       
@@ -86,7 +87,8 @@ export default function SignUp() {
         localStorage.setItem("user", JSON.stringify(res.data.user));
       
         alert("Registration successful!");
-        window.location.href = "/";
+        window.location.href = "/ambassador-info";
+        setLoading(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           const data = error.response?.data;
@@ -94,9 +96,8 @@ export default function SignUp() {
           // Check for user already exists
           if (data?.error === "User already exists" || data?.message?.includes("already exists")) {
             alert("A user with this email already exists. Please login instead.");
-            return;
+            return null;
           } else {
-            // Other errors
             alert(data?.message || "Something went wrong. Please try again.");
           }
       
@@ -105,6 +106,8 @@ export default function SignUp() {
           console.error("Unexpected error:", error);
           alert("Something went wrong. Please try again.");
         }
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -268,9 +271,10 @@ export default function SignUp() {
               </div>
               <button
                 type="submit"
-                className="bg-[#C80914] text-white px-6 py-2 rounded-3xl font-bold text-lg md:w-auto"
+                disabled={loading}
+                className="bg-red-600 text-white px-6 py-3 rounded-xl font-semibold text-lg shadow-md hover:bg-red-700 transition disabled:opacity-50"
               >
-                Sign Up
+                {loading ? "Singning in" : "Sign Up"}
               </button>
             </div>
             <p className="text-[#6C757D] pt-3 text-center sm:text-start">

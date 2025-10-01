@@ -9,7 +9,7 @@ export default function LoginPage() {
   
   const role = "university";
 
-  const [formData, setFormData] = useState({
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
@@ -19,13 +19,13 @@ export default function LoginPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setLoginData(prev => ({ ...prev, [name]: value }));
   };
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!formData.email) newErrors.email = "Email is required.";
-    if (!formData.password) newErrors.password = "Password is required.";
+    if (!loginData.email) newErrors.email = "Email is required.";
+    if (!loginData.password) newErrors.password = "Password is required.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -38,8 +38,8 @@ export default function LoginPage() {
 
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/ambassador/login`,
-        { ...formData, role },
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        { ...loginData, role },
         { headers: { "Content-Type": "application/json" } }
       );
 
@@ -85,7 +85,7 @@ export default function LoginPage() {
                 type="email"
                 name="email"
                 placeholder="Email address"
-                value={formData.email}
+                value={loginData.email}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 outline-none"
               />
@@ -97,7 +97,7 @@ export default function LoginPage() {
                 type="password"
                 name="password"
                 placeholder="Password"
-                value={formData.password}
+                value={loginData.password}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 outline-none"
               />
