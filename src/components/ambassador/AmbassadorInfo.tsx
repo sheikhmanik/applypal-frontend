@@ -111,7 +111,7 @@ export default function AmbassadorInfo() {
     }
 
     setForm((prev) => ({ ...prev, profileImage: file }));
-    setErrors((prev: any) => ({ ...prev, profileImage: "" }));
+    setErrors((prev) => ({ ...prev, profileImage: "" }));
   };
 
   // ---------- Handle Form Validation ----------
@@ -213,7 +213,7 @@ export default function AmbassadorInfo() {
                   type={field.type}
                   name={field.name}
                   placeholder={field.placeholder}
-                  value={(form as any)[field.name]}
+                  value={String(form[field.name as keyof typeof form] ?? "")}
                   onChange={handleChange}
                   className="border border-[#C7D1F2] rounded-md p-2 outline-0"
                 />
