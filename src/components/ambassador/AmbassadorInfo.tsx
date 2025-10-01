@@ -7,10 +7,37 @@ import { Info } from "lucide-react";
 
 const countries = getNames();
 
+type WrittenContent = "yes" | "no" | "";
+
+type FormType = {
+  fullName: string;
+  email: string;
+  subject: string;
+  university: string;
+  countryOriginal: string;
+  countryCurrent: string;
+  social: {
+    facebook: string;
+    instagram: string;
+    tiktok: string;
+    x: string;
+    linkedin: string;
+    youtube: string;
+    following: string[];
+  };
+  calendlyLink: string;
+  writtenContent: WrittenContent;
+  writtenDetails: string;
+  profileImage: File | null;
+};
+
+type ErrorsType = Partial<Record<keyof FormType | "social", string>>;
+
+
 export default function AmbassadorInfo() {
   
   // ---------- Form State ----------
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormType>({
     fullName: "",
     email: "",
     subject: "",
@@ -32,8 +59,8 @@ export default function AmbassadorInfo() {
     profileImage: null as File | null,
   });
 
-  const [errors, setErrors] = useState<any>({});
-  const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState<ErrorsType>({});
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   // ---------- Handle Input Change ----------
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -44,7 +71,7 @@ export default function AmbassadorInfo() {
     }));
 
     // Remove error on input
-    setErrors((prev: any) => ({
+    setErrors((prev) => ({
       ...prev,
       [name]: "",
     }));
@@ -75,11 +102,11 @@ export default function AmbassadorInfo() {
 
     // Validation
     if (!["image/jpeg", "image/jpg", "image/png", "image/gif"].includes(file.type)) {
-      setErrors((prev: any) => ({ ...prev, profileImage: "Invalid file type" }));
+      setErrors((prev) => ({ ...prev, profileImage: "Invalid file type" }));
       return;
     }
     if (file.size > 1024 * 1024) {
-      setErrors((prev: any) => ({ ...prev, profileImage: "File size should be under 1 MB" }));
+      setErrors((prev) => ({ ...prev, profileImage: "File size should be under 1 MB" }));
       return;
     }
 
@@ -89,7 +116,7 @@ export default function AmbassadorInfo() {
 
   // ---------- Handle Form Validation ----------
   const validateForm = () => {
-    const newErrors: any = {};
+    const newErrors: ErrorsType = {};
 
     if (!form.fullName) newErrors.fullName = "Full Name is required";
     if (!form.email) newErrors.email = "Email is required";
@@ -190,7 +217,11 @@ export default function AmbassadorInfo() {
                   onChange={handleChange}
                   className="border border-[#C7D1F2] rounded-md p-2 outline-0"
                 />
-                {errors[field.name] && <p className="text-red-500 text-sm">{errors[field.name]}</p>}
+                {errors[field.name as keyof FormType] && (
+                  <p className="text-red-500 text-sm">
+                    {errors[field.name as keyof FormType]}
+                  </p>
+                )}
               </div>
             ))}
 
@@ -219,7 +250,11 @@ export default function AmbassadorInfo() {
                   </select>
                   <div className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2">▼</div>
                 </div>
-                {errors[field.name] && <p className="text-red-500 text-sm">{errors[field.name]}</p>}
+                {errors[field.name as keyof FormType] && (
+                  <p className="text-red-500 text-sm">
+                    {errors[field.name as keyof FormType]}
+                  </p>
+                )}
               </div>
             ))}
           </div>
