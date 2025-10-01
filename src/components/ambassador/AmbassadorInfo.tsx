@@ -235,7 +235,7 @@ export default function AmbassadorInfo() {
                 <div className="relative w-full">
                   <select
                     name={field.name}
-                    value={(form as any)[field.name]}
+                    value={String(form[field.name as keyof typeof form] ?? "")}
                     onChange={handleChange}
                     className="appearance-none w-full border border-[#C7D1F2] rounded-lg p-2 pr-10 outline-0"
                   >
@@ -338,15 +338,14 @@ export default function AmbassadorInfo() {
               value={form.calendlyLink}
               onChange={(e) => {
                 setForm((prev) => ({ ...prev, calendlyLink: e.target.value }));
-                if (errors.calendlyLink) setErrors((prev: any) => ({ ...prev, calendlyLink: "" }));
+                if (errors.calendlyLink) setErrors((prev) => ({ ...prev, calendlyLink: "" }));
               }}
               className="border border-[#C7D1F2] rounded-md p-2 outline-0"
             />
             {errors.calendlyLink && <p className="text-red-500 text-sm pl-1">{errors.calendlyLink}</p>}
 
             <p className="pl-[2px] text-sm">
-              Please also add your Calendly link here, so that your visitors are able to book an appointment to talk to your Ambassadors.
-              Don't have a Calendly link? Create a free Calendly account here:
+              {"Please also add your Calendly link here, so that your visitors are able to book an appointment to talk to your Ambassadors. Don't have a Calendly link? Create a free Calendly account here:"}
             </p>
           </div>
         </div>
