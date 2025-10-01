@@ -60,7 +60,7 @@ export default function AmbassadorInfo() {
   });
 
   const [errors, setErrors] = useState<ErrorsType>({});
-  const [currentStep, setCurrentStep] = useState<number>(2);
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   // ---------- Handle Input Change ----------
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -164,14 +164,14 @@ export default function AmbassadorInfo() {
           >
             1
           </p>
-          <div className={`h-2 flex-1 ${currentStep >= 2 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
+          <div className={`h-2 flex-1 -mx-1 -z-10 ${currentStep >= 2 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
           <p
             className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
             ${currentStep >= 2 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
           >
             2
           </p>
-          <div className={`h-2 flex-1 ${currentStep >= 3 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
+          <div className={`h-2 flex-1 -mx-1 -z-10 ${currentStep >= 3 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
           <div
             className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
             ${currentStep >= 3 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
