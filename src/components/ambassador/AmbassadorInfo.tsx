@@ -438,5 +438,5 @@ export default function AmbassadorInfo() {
         </button>
       </div>
     </div>
-  );
+  )
 }
