@@ -244,7 +244,7 @@ export default function SignUp() {
             <div className="flex flex-col items-center justify-between space-y-2 sm:gap-0 pt-5 w-full">
               <div className="flex items-start w-full">
                 <div className="flex items-center justify-center gap-2 pl-1 pb-1">
-                  <Check/>
+                  <Check size={18} />
                   <p className="text-[#6C757D]">
                     I accept the{" "}
                     <a className="font-bold text-[#6C757D]">Terms of Service</a>
