@@ -229,10 +229,7 @@ export default function Step2({ formData, errors, onChange }: Props) {
               className="border border-[#C7D1F2] rounded-md p-2 outline-0"
               value={formData.previousSchoolName || ""}
               onChange={(e) => onChange("previousSchoolName", e.target.value)}
-              maxLength={15}
-              pattern="[0-9+]*"
-              title="Please enter a valid phone number"
-              type="tel"
+              type="text"
               required
             />
             {errors.previousSchoolName && <p className="text-red-500 text-xs pl-1">{errors.previousSchoolName}</p>}
@@ -266,6 +263,8 @@ export default function Step2({ formData, errors, onChange }: Props) {
                 value={formData.currentUniversityName}
                 onChange={(e) => onChange("currentUniversityName", e.target.value)}
                 className="border border-[#C7D1F2] rounded-md p-2 outline-0"
+                type="text"
+                required
               />
             </div>
           )}
@@ -331,7 +330,7 @@ export default function Step2({ formData, errors, onChange }: Props) {
             name="whyStudyingCourse"
             value={formData.whyStudyingCourse || ""}
             onChange={(e) => onChange("whyStudyingCourse", e.target.value)}
-            className="border rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
+            className="border border-[#C7D1F2] rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
             rows={3}
             placeholder="Please write a little about you, your goals, future ambitions, etc"
           />
@@ -345,7 +344,7 @@ export default function Step2({ formData, errors, onChange }: Props) {
             name="skilsExperience"
             value={formData.skilsExperience || ""}
             onChange={(e) => onChange("skilsExperience", e.target.value)}
-            className="border rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
+            className="border border-[#C7D1F2] rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
             rows={3}
             placeholder="Eg"
           />
@@ -359,7 +358,7 @@ export default function Step2({ formData, errors, onChange }: Props) {
             name="hobbiesInterests"
             value={formData.hobbiesInterests || ""}
             onChange={(e) => onChange("hobbiesInterests", e.target.value)}
-            className="border rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
+            className="border border-[#C7D1F2] rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
             rows={3}
             placeholder="eg. Sports, Music, Travel, Reading etc"
           />
@@ -372,7 +371,7 @@ export default function Step2({ formData, errors, onChange }: Props) {
             name="caringCauses"
             value={formData.caringCauses || ""}
             onChange={(e) => onChange("caringCauses", e.target.value)}
-            className="border rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
+            className="border border-[#C7D1F2] rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
             rows={3}
             placeholder="eg. World Poverty, Mental health, Housing Crisis etc"
           />
@@ -386,7 +385,7 @@ export default function Step2({ formData, errors, onChange }: Props) {
             name="accomplishmentsProudOf"
             value={formData.accomplishmentsProudOf || ""}
             onChange={(e) => onChange("accomplishmentsProudOf", e.target.value)}
-            className="border rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
+            className="border border-[#C7D1F2] rounded-lg p-2 text-sm outline-none text-black min-h-20 max-h-40"
             rows={3}
             placeholder="eg. Academic or sporting achievements, charity work, etc"
           />
