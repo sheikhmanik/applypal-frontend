@@ -56,7 +56,7 @@ export type FormDataType = {
 export type ErrorsType = Partial<Record<keyof FormDataType, string>>;
 
 export default function AmbassadorInfo() {
-  const [currentStep, setCurrentStep] = useState<number>(2);
+  const [currentStep, setCurrentStep] = useState<number>(1);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState<FormDataType>({
