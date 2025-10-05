@@ -26,7 +26,7 @@ export type FormDataType = {
   calendlyLink: string;
   writtenContent: "yes" | "no" | "unanswered";
   writtenDetails: string;
-  profileImage: File | null;
+  profileImage: string | null;
   
   dob: Date | null;
   gender: string;
@@ -129,26 +129,31 @@ export default function AmbassadorInfo() {
   };
 
   const handleProfileImageChange = (file: File | null) => {
-    // Basic immediate validation (type + size). Main form-level validation still runs on "Next/Submit".
     if (!file) {
       setFormData((prev) => ({ ...prev, profileImage: null }));
       setErrors((prev) => ({ ...prev, profileImage: undefined }));
       return;
     }
-
+  
     const allowed = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
     if (!allowed.includes(file.type)) {
       setErrors((prev) => ({ ...prev, profileImage: "Invalid file type. Use jpg/jpeg/png/gif." }));
       return;
     }
-
+  
     if (file.size > 1024 * 1024) {
       setErrors((prev) => ({ ...prev, profileImage: "File too large — max 1 MB." }));
       return;
     }
-
-    setFormData((prev) => ({ ...prev, profileImage: file }));
-    setErrors((prev) => ({ ...prev, profileImage: undefined }));
+  
+    // Converting image file to Base64 string
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      setFormData((prev) => ({ ...prev, profileImage: base64String }));
+      setErrors((prev) => ({ ...prev, profileImage: undefined }));
+    };
+    reader.readAsDataURL(file);
   };
 
   const validateStep = (step: number) => {

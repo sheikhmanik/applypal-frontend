@@ -18,17 +18,11 @@ type Props = {
 };
 
 export default function Step1({ formData, errors, onChange, onSocialChange, onToggleFollowing, onProfileImageChange }: Props) {
+  
   const [previewSrc, setPreviewSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!formData.profileImage) {
-      setPreviewSrc(null);
-      return;
-    }
-
-    const url = URL.createObjectURL(formData.profileImage);
-    setPreviewSrc(url);
-    return () => URL.revokeObjectURL(url);
+    setPreviewSrc(formData.profileImage);
   }, [formData.profileImage]);
 
   return (
@@ -239,7 +233,6 @@ export default function Step1({ formData, errors, onChange, onSocialChange, onTo
               className="w-full h-[300px] border border-dashed bg-[#F5F8FF] rounded-xl flex justify-center items-center cursor-pointer"
             >
               {previewSrc ? (
-                // use regular img for blob URLs — Next/Image doesn't like dynamic blob urls without a loader
                 <Image src={previewSrc} alt="preview" width={150} height={150} className="object-contain" />
               ) : (
                 <p className="text-[#3A3D4D] font-semibold">Click here to upload image</p>
