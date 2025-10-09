@@ -1,0 +1,89 @@
+type FormDataType = {
+    fullName: string;
+    email: string;
+    subject: string;
+    university: string;
+    countryOriginal: string;
+    countryCurrent: string;
+    social: {
+        facebook: string;
+        instagram: string;
+        tiktok: string;
+        x: string;
+        linkedin: string;
+        youtube: string;
+        following: string[];
+    };
+    calendlyLink: string;
+    writtenContent: "yes" | "no" | "unanswered";
+    writtenDetails: string;
+    profileImage: string | null;
+    dob: Date | null;
+    gender: string;
+    languages: string[];
+    currentlyLivingCountry: string;
+    phoneNumber: string;
+    leaveAPYear: number | null;
+    previousSchoolName: string;
+    currentlyUniversityStudent: "yes" | "no" | "unanswered";
+    currentUniversityName: string;
+    services: string[];
+    whyStudyingCourse: string;
+    skilsExperience: string;
+    hobbiesInterests: string;
+    caringCauses: string;
+    accomplishmentsProudOf: string;
+    answerQ1: string;
+    answerQ2: string;
+    answerQ3: string;
+    answerQ4: string;
+    question1?: string;
+    question2?: string;
+    question3?: string;
+    isRegisteredAmbassador: "yes" | "no" | "unanswered"
+};
+
+const [formData, setFormData] = useState<FormDataType>({
+    fullName: "",
+    email: "",
+    subject: "",
+    university: "",
+    countryOriginal: "",
+    countryCurrent: "",
+    social: {
+        facebook: "",
+        instagram: "",
+        tiktok: "",
+        x: "",
+        linkedin: "",
+        youtube: "",
+        following: [],
+    },
+    calendlyLink: "",
+    writtenContent: "unanswered",
+    writtenDetails: "",
+    profileImage: null,
+    dob: null,
+    gender: "",
+    languages: [],
+    currentlyLivingCountry: "",
+    phoneNumber: "",
+    leaveAPYear: null,
+    previousSchoolName: "",
+    currentlyUniversityStudent: "unanswered",
+    currentUniversityName: "",
+    services: [],
+    whyStudyingCourse: "",
+    skilsExperience: "",
+    hobbiesInterests: "",
+    caringCauses: "",
+    accomplishmentsProudOf: "",
+    answerQ1: "",
+    answerQ2: "",
+    answerQ3: "",
+    answerQ4: "",
+    question1: "",
+    question2: "",
+    question3: "",
+    isRegisteredAmbassador: "unanswered"
+});

@@ -5,7 +5,7 @@ import { getNames } from "country-list";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import { FormDataType, ErrorsType } from "../AmbassadorInfo";
+import { FormDataType, ErrorsType } from "../ProfileSetup";
 import { Check, Info } from "lucide-react";
 import ISO6391 from "iso-639-1"; // Import the ISO 639-1 library (For Languages)
 import Image from "next/image";

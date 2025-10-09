@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Step1 from "./info-form/Step1";
-import Step2 from "./info-form/Step2";
-import Step3 from "./info-form/Step3";
+import Step1 from "./setup-form/Step1";
+import Step2 from "./setup-form/Step2";
+import Step3 from "./setup-form/Step3";
+import axios from "axios";
 
 export type FormDataType = {
   fullName: string;
@@ -242,6 +243,38 @@ export default function AmbassadorInfo() {
 
   const handleBack = () => setCurrentStep((p) => Math.max(1, p - 1));
 
+  async function sendSubmitForm() {
+
+    // 🔑 Extract token from cookies
+    const cookieString = document.cookie; // e.g. "token=abc123; theme=dark"
+    const token = cookieString
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1]
+    ;
+    console.log(token);    
+
+    if (!token) {
+      console.error("No token found in cookies");
+      return;
+    }
+  
+    try {
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/ambassador/profile`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Profile saved:", res.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  }
+
   const handleSubmit = async () => {
     if (!validateStep(1)) {
       setCurrentStep(1);
@@ -258,7 +291,8 @@ export default function AmbassadorInfo() {
     setLoading(true);
   
     try {
-      console.log("Ambassador Info: ", formData);
+      // console.log("Ambassador Info: ", formData);
+      await sendSubmitForm();
       setCurrentStep(3);
     } catch (err) {
       console.error(err);
@@ -269,12 +303,6 @@ export default function AmbassadorInfo() {
 
   return (
     <div className="container mx-auto w-full py-10 space-y-10 px-5">
-
-      <div className="w-full flex items-center justify-start">
-        <Link href="/" className="flex justify-center">
-          <Image src="/images/logo.png" width={300} height={300} alt="ApplyPal Logo" className="w-40" />
-        </Link>
-      </div>
 
       <div className="flex flex-col gap-2">
         <p className="flex w-full text-xl font-medium text-[#494848]">Update Profile</p>

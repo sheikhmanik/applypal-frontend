@@ -43,12 +43,13 @@ export default function LoginPage() {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      // Save token and user info
+      // Success: store token
       localStorage.setItem("token", res.data.accessToken);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      const token = localStorage.getItem("token");
+      document.cookie = `token=${token}; path=/;`;
 
       alert("Login successful!");
-      window.location.href = "/";
+      window.location.href = "/ambassador";
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const data = error.response?.data;

@@ -82,12 +82,13 @@ export default function SignUp() {
           payload
         );
       
-        // Success: store token & user info
+        // Success: store token
         localStorage.setItem("token", res.data.accessToken);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-      
+        const token = localStorage.getItem("token");
+        document.cookie = `token=${token}; path=/;`;
+
         alert("Registration successful!");
-        window.location.href = "/ambassador-info";
+        window.location.href = "/ambassador/profile-setup";
         setLoading(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {

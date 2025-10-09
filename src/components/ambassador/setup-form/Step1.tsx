@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { getNames } from "country-list";
 import { Info } from "lucide-react";
-import type { FormDataType, ErrorsType } from "../AmbassadorInfo";
+import type { FormDataType, ErrorsType } from "../ProfileSetup";
 
 const countries = getNames();
 
