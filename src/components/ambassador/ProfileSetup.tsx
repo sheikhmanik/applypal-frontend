@@ -260,7 +260,7 @@ export default function AmbassadorInfo() {
     }
   
     try {
-      const res = await axios.put(
+      const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/ambassador/profile`,
         formData,
         {
