@@ -105,6 +105,10 @@ export default function EditProfile() {
     isRegisteredAmbassador: "unanswered"
   });
 
+  useEffect(() => {
+    console.log(formData.university);
+  }, [formData.university]);
+
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [submitting, setSubmitting] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
@@ -260,7 +264,7 @@ export default function EditProfile() {
 
       if (formData.writtenContent === "unanswered") newErrors.writtenContent = "Please select Yes or No";
       if (formData.writtenContent === "yes" && !formData.writtenDetails.trim()) newErrors.writtenDetails = "Please provide details";
-      if (!formData.profileImage) newErrors.profileImage = "Please upload profile photo";
+      // if (!formData.profileImage) newErrors.profileImage = "Please upload profile photo";
     }
 
     if (step === 2) {
@@ -322,9 +326,8 @@ export default function EditProfile() {
   const handleBack = () => setCurrentStep((p) => Math.max(1, p - 1));
 
   async function sendSubmitForm() {
-
-    // 🔑 Extract token from cookies
-    const cookieString = document.cookie; // e.g. "token=abc123; theme=dark"
+    // Extract token from cookies
+    const cookieString = document.cookie;
     const token = cookieString
       .split("; ")
       .find((row) => row.startsWith("token="))

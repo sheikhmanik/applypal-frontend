@@ -198,15 +198,16 @@ export default function Navbar() {
                 ✏️ <span>Edit Profile</span>
               </Link>
 
-              <button
+              <Link
+                href="/ambassador/create-post"
                 onClick={() => {
                   setIsSideBarOpen(false);
-                  router.push("/ambassador/create-post") // or open modal
+                  router.push("/ambassador/create-post")
                 }}
                 className="flex items-center gap-3 text-gray-700 hover:text-[#08498E]"
               >
                 📝 <span>Create Post</span>
-              </button>
+              </Link>
             </div>
 
             {/* Bottom User Section */}
