@@ -38,7 +38,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-5">
       <h2 className="text-lg font-bold mb-2">Profile Data</h2>
       <pre className="bg-gray-100 p-4 rounded text-sm overflow-x-auto">
         {JSON.stringify(profileData, null, 2)}

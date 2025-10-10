@@ -378,7 +378,7 @@ export default function EditProfile() {
   };
 
   if (!dataFetched) {
-    return <p>Loading...</p>
+    return <p className="p-5">Loading...</p>
   } else {
     return (
       <div className="container mx-auto w-full py-10 space-y-10 px-5">
