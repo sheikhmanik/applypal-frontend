@@ -28,8 +28,8 @@ export default function Step3() {
       </div>
     </div>
     <div className="flex items-center justify-center">
-      <Link href="/" className="px-4 py-2 bg-[#08498E] text-white rounded-full">
-        Go to Homepage →
+      <Link href="/ambassador" className="px-4 py-2 bg-[#08498E] text-white rounded-full">
+        Ambassador Page →
       </Link>
     </div>
     </>
