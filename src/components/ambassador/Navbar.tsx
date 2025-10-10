@@ -111,7 +111,7 @@ export default function Navbar() {
             <div className="absolute top-9 right-0 bg-white shadow-lg rounded-lg w-40 border border-gray-100 z-50 animate-fadeIn">
               <Link
                 onClick={() => setProfileClicked(false)}
-                href="/ambassador/profile-setup"
+                href="/ambassador/profile/edit"
                 className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 px-4 py-2"
               >
                 Edit Profile
@@ -191,7 +191,7 @@ export default function Navbar() {
 
               {/* Profile Actions */}
               <Link
-                href="/ambassador/profile-setup"
+                href="/ambassador/profile/edit"
                 onClick={() => setIsSideBarOpen(false)}
                 className="flex items-center gap-3 text-gray-700 hover:text-[#08498E]"
               >

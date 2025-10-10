@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Step1 from "./setup-form/Step1";
@@ -56,10 +56,8 @@ export type FormDataType = {
 
 export type ErrorsType = Partial<Record<keyof FormDataType, string>>;
 
-export default function AmbassadorInfo() {
-  const [currentStep, setCurrentStep] = useState<number>(1);
-  const [loading, setLoading] = useState(false);
-
+export default function EditProfile() {
+  
   const [formData, setFormData] = useState<FormDataType>({
     
     fullName: "",
@@ -106,6 +104,84 @@ export default function AmbassadorInfo() {
     question3: "",
     isRegisteredAmbassador: "unanswered"
   });
+
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchProfileData() {
+    try {
+
+      // 🔑 Extract token from cookies
+      const cookieString = document.cookie; // e.g. "token=abc123; theme=dark"
+      const token = cookieString
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1]
+      ;
+
+      if (!token) return;
+
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/ambassador/profile`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const data = res.data;
+
+      setFormData({
+        fullName: data?.user?.fullName || "",
+        email: data?.user?.email || "",
+        subject: data?.subject || "",
+        university: data?.university || "",
+        countryOriginal: data?.countryOriginal || "",
+        countryCurrent: data?.countryCurrent || "",
+        social: {
+          facebook: data?.socialLinks?.facebook || "",
+          instagram: data?.socialLinks?.instagram || "",
+          tiktok: data?.socialLinks?.tiktok || "",
+          x: data?.socialLinks?.x || "",
+          linkedin: data?.socialLinks?.linkedin || "",
+          youtube: data?.socialLinks?.youtube || "",
+          following: data?.following || [],
+        },
+        calendlyLink: data?.calendlyLink || "",
+        writtenContent: data?.writtenContent || "unanswered",
+        writtenDetails: data?.writtenDetails || "",
+        profileImage: data?.profileImage || null,
+  
+        dob: data?.dob || null,
+        gender: data?.gender || "",
+        languages: data?.languages || [],
+        currentlyLivingCountry: data?.currentlyLivingCountry || "",
+        phoneNumber: data?.phoneNumber || "",
+        leaveAPYear: data?.leaveAPYear || null,
+        previousSchoolName: data?.previousSchoolName || "",
+        currentlyUniversityStudent: data?.currentlyUniversityStudent || "unanswered",
+        currentUniversityName: data?.currentUniversityName || "",
+        services: data?.services || [],
+        whyStudyingCourse: data?.whyStudyingCourse || "",
+        skilsExperience: data?.skilsExperience || "",
+        hobbiesInterests: data?.hobbiesInterests || "",
+        caringCauses: data?.caringCauses || "",
+        accomplishmentsProudOf: data?.accomplishmentsProudOf || "",
+        answerQ1: data?.answerQ1 || "",
+        answerQ2: data?.answerQ2 || "",
+        answerQ3: data?.answerQ3 || "",
+        answerQ4: data?.answerQ4 || "",
+        question1: data?.question1 || "",
+        question2: data?.question2 || "",
+        question3: data?.question3 || "",
+        isRegisteredAmbassador: data?.isRegisteredAmbassador || "unanswered",
+      });
+    } catch (error: any) {
+      console.log(error)
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   const [errors, setErrors] = useState<ErrorsType>({});
 
@@ -260,7 +336,7 @@ export default function AmbassadorInfo() {
     }
   
     try {
-      const res = await axios.post(
+      const res = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/ambassador/profile`,
         formData,
         {
@@ -300,6 +376,8 @@ export default function AmbassadorInfo() {
       setLoading(false);
     }
   };
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="container mx-auto w-full py-10 space-y-10 px-5">
