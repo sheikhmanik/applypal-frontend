@@ -269,9 +269,10 @@ export default function AmbassadorInfo() {
           },
         }
       );
-      console.log("Profile saved:", res.data);
+      return true;
     } catch (error) {
       console.error("Error submitting form:", error);
+      return false;
     }
   }
 
@@ -291,9 +292,12 @@ export default function AmbassadorInfo() {
     setLoading(true);
   
     try {
-      // console.log("Ambassador Info: ", formData);
-      await sendSubmitForm();
-      setCurrentStep(3);
+      const success = await sendSubmitForm();
+      if (success) {
+        setCurrentStep(3);
+      } else {
+        setCurrentStep(2);
+      }
     } catch (err) {
       console.error(err);
     } finally {
