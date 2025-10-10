@@ -18,18 +18,15 @@ export default function Profile() {
         ?.split("=")[1]
       ;
 
-      if (!token) {
-        console.error("No token found in cookies");
-        return;
-      }
+      if (!token) return;
 
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/ambassador/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       console.log("Profile data:", res.data);
-    } catch (error) {
-      console.error(error, "Can't fetch data");
+    } catch (error: any) {
+      console.log(error)
     } finally {
       setLoading(false);
     }

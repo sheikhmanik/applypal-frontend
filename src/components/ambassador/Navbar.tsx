@@ -40,18 +40,15 @@ export default function Navbar() {
         ?.split("=")[1]
       ;
 
-      if (!token) {
-        console.error("No token found in cookies");
-        return;
-      }
+      if (!token) return;
 
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/ambassador/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      setUserName(res.data.user.fullName);
-    } catch (error) {
-      console.error(error, "Can't fetch data");
+      setUserName(res?.data?.user?.fullName);
+    } catch (error: any) {
+      console.log(error)
     } finally {
       setLoading(false);
     }
