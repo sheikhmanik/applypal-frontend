@@ -106,7 +106,8 @@ export default function EditProfile() {
   });
 
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false);
 
   async function fetchProfileData() {
     try {
@@ -126,6 +127,7 @@ export default function EditProfile() {
       });
 
       const data = res.data;
+      console.log("Profile data: ", data);
 
       setFormData({
         fullName: data?.user?.fullName || "",
@@ -175,7 +177,7 @@ export default function EditProfile() {
     } catch (error: any) {
       console.log(error)
     } finally {
-      setLoading(false);
+      setDataFetched(true);
     }
   }
 
@@ -328,7 +330,6 @@ export default function EditProfile() {
       .find((row) => row.startsWith("token="))
       ?.split("=")[1]
     ;
-    console.log(token);    
 
     if (!token) {
       console.error("No token found in cookies");
@@ -364,109 +365,114 @@ export default function EditProfile() {
       return;
     }
   
-    setLoading(true);
+    setSubmitting(true);
   
     try {
-      // console.log("Ambassador Info: ", formData);
       await sendSubmitForm();
       setCurrentStep(3);
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-
-  return (
-    <div className="container mx-auto w-full py-10 space-y-10 px-5">
-
-      <div className="flex flex-col gap-2">
-        <p className="flex w-full text-xl font-medium text-[#494848]">Update Profile</p>
-        <p className="bg-[#FFF3CD] text-[#856404] flex items-center justify-center p-2 rounded-md">
-          Please add some basic information about you here
-        </p>
-      </div>
-
-      <div className="flex flex-col w-full max-w-6xl mx-auto">
-        <div className="flex items-center justify-between w-full px-4">
-          <p
-            className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
-            ${currentStep >= 1 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
-          >
-            1
+  if (!dataFetched) {
+    return <p>Loading...</p>
+  } else {
+    return (
+      <div className="container mx-auto w-full py-10 space-y-10 px-5">
+  
+        <div className="flex flex-col gap-2">
+          <p className="flex w-full text-xl font-medium text-[#494848]">Update Profile</p>
+          <p className="bg-[#FFF3CD] text-[#856404] flex items-center justify-center p-2 rounded-md">
+            Please add some basic information about you here
           </p>
-          <div className={`h-2 flex-1 -mx-1 -z-10 ${currentStep >= 2 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
-          <p
-            className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
-            ${currentStep >= 2 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
-          >
-            2
-          </p>
-          <div className={`h-2 flex-1 -mx-1 -z-10 ${currentStep >= 3 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
-          <div
-            className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
-            ${currentStep >= 3 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
-          >
-            3
+        </div>
+
+        <div className="flex flex-col w-full max-w-6xl mx-auto">
+          <div className="flex items-center justify-between w-full px-4">
+            <p
+              className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
+              ${currentStep >= 1 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
+            >
+              1
+            </p>
+            <div className={`h-2 flex-1 -mx-1 -z-10 ${currentStep >= 2 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
+            <p
+              className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
+              ${currentStep >= 2 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
+            >
+              2
+            </p>
+            <div className={`h-2 flex-1 -mx-1 -z-10 ${currentStep >= 3 ? "bg-[#08498E]" : "bg-[#E0E0E0]"}`}></div>
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold
+              ${currentStep >= 3 ? "bg-[#08498E] text-white" : "bg-[#E0E0E0] text-[#08498E]"}`}
+            >
+              3
+            </div>
+          </div>
+          <div className="flex justify-between mt-2 text-sm font-medium w-full">
+            <p className={`${currentStep >= 1 ? "text-[#08498E]" : "text-[#9E9E9E]"} pl-1`}>Basic Info</p>
+            <p className={`${currentStep >= 2 ? "text-[#08498E]" : "text-[#9E9E9E]"} pl-2`}>Additional Info</p>
+            <p className={`${currentStep >= 3 ? "text-[#08498E]" : "text-[#9E9E9E]"}`}>Completed</p>
           </div>
         </div>
-        <div className="flex justify-between mt-2 text-sm font-medium w-full">
-          <p className={`${currentStep >= 1 ? "text-[#08498E]" : "text-[#9E9E9E]"} pl-1`}>Basic Info</p>
-          <p className={`${currentStep >= 2 ? "text-[#08498E]" : "text-[#9E9E9E]"} pl-2`}>Additional Info</p>
-          <p className={`${currentStep >= 3 ? "text-[#08498E]" : "text-[#9E9E9E]"}`}>Completed</p>
+
+        {currentStep === 1 && (
+          <Step1
+            formData={formData}
+            errors={errors}
+            onChange={(name, value) => handleFieldChange(name as keyof FormDataType, value)}
+            onSocialChange={(platform, value) => handleSocialChange(platform, value)}
+            onToggleFollowing={handleToggleFollowing}
+            onProfileImageChange={handleProfileImageChange}
+          />
+        )}
+
+        {currentStep === 2 && (
+          <Step2
+            formData={formData}
+            errors={errors}
+            onChange={(name, value) => handleFieldChange(name as keyof FormDataType, value)}
+          />
+        )}
+
+        {currentStep === 3 && (
+          <Step3/>
+        )}
+
+        <div className="w-full flex justify-between mx-auto">
+          <div>
+            {currentStep === 2 && (
+              <button onClick={handleBack} className="px-4 py-2 rounded-full border border-[#08498E] text-[#08498E]">
+                ← Previous
+              </button>
+            )}
+          </div>
+
+          <div>
+            {currentStep < 2 && (
+              <button onClick={handleNext} className="px-4 py-2 bg-[#08498E] text-white rounded-full">
+                Save & Continue →
+              </button>
+            )}
+
+            {currentStep === 2 && (
+              <button
+                onClick={handleSubmit}
+                className="px-4 py-2 bg-[#08498E] text-white rounded-full"
+                disabled={submitting}
+              >
+                {submitting ? "Submitting..." : "Submit →"}
+              </button>
+            )}
+
+          </div>
         </div>
+
       </div>
-
-      {currentStep === 1 && (
-        <Step1
-          formData={formData}
-          errors={errors}
-          onChange={(name, value) => handleFieldChange(name as keyof FormDataType, value)}
-          onSocialChange={(platform, value) => handleSocialChange(platform, value)}
-          onToggleFollowing={handleToggleFollowing}
-          onProfileImageChange={handleProfileImageChange}
-        />
-      )}
-
-      {currentStep === 2 && (
-        <Step2
-          formData={formData}
-          errors={errors}
-          onChange={(name, value) => handleFieldChange(name as keyof FormDataType, value)}
-        />
-      )}
-
-      {currentStep === 3 && (
-        <Step3/>
-      )}
-
-      <div className="w-full flex justify-between mx-auto">
-        <div>
-          {currentStep === 2 && (
-            <button onClick={handleBack} className="px-4 py-2 rounded-full border border-[#08498E] text-[#08498E]">
-              ← Previous
-            </button>
-          )}
-        </div>
-
-        <div>
-          {currentStep < 2 && (
-            <button onClick={handleNext} className="px-4 py-2 bg-[#08498E] text-white rounded-full">
-              Save & Continue →
-            </button>
-          )}
-
-          {currentStep === 2 && (
-            <button onClick={handleSubmit} className="px-4 py-2 bg-[#08498E] text-white rounded-full" disabled={loading}>
-              {loading ? "Submitting..." : "Submit →"}
-            </button>
-          )}
-
-        </div>
-      </div>
-
-    </div>
-  );
+    )
+  }
 }

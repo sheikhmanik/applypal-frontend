@@ -71,7 +71,6 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setLoading(true);
   
     if (validate()) {
       const payload = { ...formData, role };
@@ -84,9 +83,7 @@ export default function SignUp() {
         );
       
         // Success: store token & user info
-        localStorage.setItem("token", res.data.accessToken);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-      
+        localStorage.setItem("token", res.data.accessToken);      
         alert("Registration successful!");
         window.location.href = "/";
       } catch (error) {
@@ -254,10 +251,10 @@ export default function SignUp() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading && Object.keys(errors).length > 0}
                 className="bg-red-600 text-white px-6 py-3 rounded-xl font-semibold text-lg shadow-md hover:bg-red-700 transition disabled:opacity-50"
               >
-                {loading ? "Singning in" : "Sign Up"}
+                {loading && Object.keys(errors).length === 0 ? "Singning in" : "Sign Up"}
               </button>
             </div>
             <p className="text-[#6C757D] pt-3 text-center sm:text-start">

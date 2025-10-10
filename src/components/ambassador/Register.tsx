@@ -71,45 +71,49 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setLoading(true);
-  
-    if (validate()) {
-      const payload = { ...formData, role };
-  
-      try {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-          payload
-        );
-      
-        // Success: store token
-        localStorage.setItem("token", res.data.accessToken);
-        const token = localStorage.getItem("token");
-        document.cookie = `token=${token}; path=/;`;
 
-        alert("Registration successful!");
-        window.location.href = "/ambassador/profile-setup";
-        setLoading(false);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          const data = error.response?.data;
-      
-          // Check for user already exists
-          if (data?.error === "User already exists" || data?.message?.includes("already exists")) {
-            alert("A user with this email already exists. Please login instead.");
-            return null;
-          } else {
-            alert(data?.message || "Something went wrong. Please try again.");
-          }
-      
-          console.error("Axios error:", data || error.message);
+    const isValid = validate();
+    if (!isValid) {
+      console.warn("Form has errors, submission blocked.");
+      return;
+    }
+    setLoading(true);
+
+    const payload = { ...formData, role };
+
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
+        payload
+      );
+    
+      // Success: store token
+      localStorage.setItem("token", res.data.accessToken);
+      const token = localStorage.getItem("token");
+      document.cookie = `token=${token}; path=/;`;
+
+      alert("Registration successful!");
+      window.location.href = "/ambassador/profile-setup";
+      setLoading(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const data = error.response?.data;
+    
+        // Check for user already exists
+        if (data?.error === "User already exists" || data?.message?.includes("already exists")) {
+          alert("A user with this email already exists. Please login instead.");
+          return null;
         } else {
-          console.error("Unexpected error:", error);
-          alert("Something went wrong. Please try again.");
+          alert(data?.message || "Something went wrong. Please try again.");
         }
-      } finally {
-        setLoading(false);
+    
+        console.error("Axios error:", data || error.message);
+      } else {
+        console.error("Unexpected error:", error);
+        alert("Something went wrong. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -275,7 +279,7 @@ export default function SignUp() {
                 disabled={loading}
                 className="bg-red-600 text-white px-6 py-3 rounded-xl font-semibold text-lg shadow-md hover:bg-red-700 transition disabled:opacity-50"
               >
-                {loading ? "Singning in" : "Sign Up"}
+                {loading ? "Singning in.." : "Sign Up"}
               </button>
             </div>
             <p className="text-[#6C757D] pt-3 text-center sm:text-start">
