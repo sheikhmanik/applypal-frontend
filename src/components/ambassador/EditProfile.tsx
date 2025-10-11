@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import Step1 from "./setup-form/Step1";
 import Step2 from "./setup-form/Step2";
 import Step3 from "./setup-form/Step3";
 import axios from "axios";
+import { InlineLoader } from "../ui/InlineLoader";
+import Loader from "../ui/Loader";
 
 export type FormDataType = {
   fullName: string;
@@ -106,8 +106,8 @@ export default function EditProfile() {
   });
 
   useEffect(() => {
-    console.log(formData.university);
-  }, [formData.university]);
+    console.log(formData.social.following);
+  }, [formData.social]);
 
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [submitting, setSubmitting] = useState(false);
@@ -137,7 +137,7 @@ export default function EditProfile() {
         fullName: data?.user?.fullName || "",
         email: data?.user?.email || "",
         subject: data?.subject || "",
-        university: data?.university || "",
+        university: data?.user.university || "",
         countryOriginal: data?.countryOriginal || "",
         countryCurrent: data?.countryCurrent || "",
         social: {
@@ -147,7 +147,7 @@ export default function EditProfile() {
           x: data?.socialLinks?.x || "",
           linkedin: data?.socialLinks?.linkedin || "",
           youtube: data?.socialLinks?.youtube || "",
-          following: data?.following || [],
+          following: data?.socialLinks.following || [],
         },
         calendlyLink: data?.calendlyLink || "",
         writtenContent: data?.writtenContent || "unanswered",
@@ -264,7 +264,7 @@ export default function EditProfile() {
 
       if (formData.writtenContent === "unanswered") newErrors.writtenContent = "Please select Yes or No";
       if (formData.writtenContent === "yes" && !formData.writtenDetails.trim()) newErrors.writtenDetails = "Please provide details";
-      // if (!formData.profileImage) newErrors.profileImage = "Please upload profile photo";
+      if (!formData.profileImage) newErrors.profileImage = "Please upload profile photo";
     }
 
     if (step === 2) {
@@ -349,6 +349,7 @@ export default function EditProfile() {
           },
         }
       );
+      console.log(formData);
       return true;
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -386,7 +387,11 @@ export default function EditProfile() {
   };
 
   if (!dataFetched) {
-    return <p className="p-5">Loading...</p>
+    return (
+      <div className="w-full h-[50vh] flex items-center justify-center">
+        <Loader/>
+      </div>
+    )
   } else {
     return (
       <div className="container mx-auto w-full py-10 space-y-10 px-5">
@@ -473,7 +478,7 @@ export default function EditProfile() {
                 className="px-4 py-2 bg-[#08498E] text-white rounded-full"
                 disabled={submitting}
               >
-                {submitting ? "Submitting..." : "Submit →"}
+                {submitting ? <div className="flex items-center justify-center gap-1"><p>Submitting...</p><InlineLoader/></div> : "Submit →"}
               </button>
             )}
 

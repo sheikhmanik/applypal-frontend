@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import Step1 from "./setup-form/Step1";
 import Step2 from "./setup-form/Step2";
 import Step3 from "./setup-form/Step3";
 import axios from "axios";
+import { InlineLoader } from "../ui/InlineLoader";
 
 export type FormDataType = {
   fullName: string;
@@ -58,7 +57,7 @@ export type ErrorsType = Partial<Record<keyof FormDataType, string>>;
 
 export default function AmbassadorInfo() {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState<FormDataType>({
     
@@ -289,7 +288,7 @@ export default function AmbassadorInfo() {
       return;
     }
   
-    setLoading(true);
+    setSubmitting(true);
   
     try {
       const success = await sendSubmitForm();
@@ -301,7 +300,7 @@ export default function AmbassadorInfo() {
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -385,8 +384,8 @@ export default function AmbassadorInfo() {
           )}
 
           {currentStep === 2 && (
-            <button onClick={handleSubmit} className="px-4 py-2 bg-[#08498E] text-white rounded-full" disabled={loading}>
-              {loading ? "Submitting..." : "Submit →"}
+            <button onClick={handleSubmit} className="px-4 py-2 bg-[#08498E] text-white rounded-full" disabled={submitting}>
+              {submitting ? <div className="flex items-center justify-center gap-1"><p>Submitting...</p><InlineLoader/></div> : "Submit →"}
             </button>
           )}
 
